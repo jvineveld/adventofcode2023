@@ -109,17 +109,12 @@ const test = [
     "6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green",
 ]
 
-const maxCubes = {
-    red: 12,
-    green: 13,
-    blue: 14
-}
-
-const validGames = []
+const outputs = []
 
 const loop = () => {
-    for(const [index, game] of input.entries()) {
+    for(const game of input) {
         const sets = game.split(';');
+
         const counts = {
             red: 0,
             green: 0,
@@ -127,39 +122,26 @@ const loop = () => {
         }
 
         for(const set of sets) {
+            
             const cubeMatches = set.matchAll(/([\d+]{1,}) (\w+)/gm)
 
             for(const cubeMatch of cubeMatches) {
                 const count = parseInt(cubeMatch[1]),
-                    color = cubeMatch[2]
+                    color = cubeMatch[2];
 
-                counts[color] += count;
-            }
-
-            console.log(set)
-        }
-
-        console.log(game)
-        console.log(JSON.stringify(counts))
-
-        let isValid = true;
-        for(const color in counts) {
-            if(counts[color] >= maxCubes[color]) {
-                isValid = false
+                if(count > counts[color]){
+                    counts[color] = count;
+                }
             }
         }
 
-        const gameId = index + 1;
-
-        if(isValid){
-            console.log(`Valid game ${gameId}`, counts)
-            validGames.push(gameId)
-        }
+        const output = Object.values(counts).reduce((old, cur) => old * cur, 1)
+        outputs.push(output)
     }
 }
 
 loop();
 
-const totalScore = validGames.reduce((prev, cur) => prev+cur, 0)
+const totalScore = outputs.reduce((prev, cur) => prev+cur, 0)
 
-console.log({totalScore})
+console.log({totalScore, outputs})
