@@ -1,8 +1,4 @@
-/**
- * this one has become a bit messy
- * dont care, it works, this is no production code, and got work to do
- * 
- */
+
 const { getInput } = require("../helper");
 var lcm = require('lcm');
 
