@@ -50,8 +50,6 @@ const parseHand = (hand) => ({ hand, typeScore: getHandTypeScore(hand) })
 const parseRow = (row) => {
     const [rawhand, bid] = row.split(" ")
 
-    console.log({row, rawhand, bid})
-
     return { 
         bid: parseInt(bid), 
         cards: parseHand(rawhand) 
@@ -79,8 +77,6 @@ const init = async (test) => {
     const totals = sorted.reduce((old, cur, index) => {
         return old + ((index+1) * cur.bid)
     },0)
-
-    sorted.forEach(row => console.log(row.hand))
 
     console.log({totals})
 }
